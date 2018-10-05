@@ -19,32 +19,14 @@ ghc-options:
 - -fwarn-tabs
 - -Wall
 - -Wcompat
-# - -Werror
+- -Werror
 - -Wincomplete-record-updates
 - -Wincomplete-uni-patterns
 - -Wredundant-constraints
 
-default-extensions:
-- BangPatterns
-- DeriveFoldable
-- DeriveFunctor
-- DeriveGeneric
-- DeriveLift
-- DeriveTraversable
-- EmptyCase
-- FlexibleContexts
-- FlexibleInstances
-- GeneralizedNewtypeDeriving
-- InstanceSigs
-- KindSignatures
-- LambdaCase
-- MultiParamTypeClasses
-- MultiWayIf
-- NamedFieldPuns
-- OverloadedStrings
-- ScopedTypeVariables
-- StandaloneDeriving
-- TupleSections
+# default-extensions:
+# - GeneralizedNewtypeDeriving
+# - TupleSections
 
 dependencies:
 - base >=4.10 && < 5
