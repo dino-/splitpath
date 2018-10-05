@@ -1,15 +1,16 @@
 {-# LANGUAGE QuasiQuotes #-}
 
 import Control.Monad ( when )
-import System.Console.Docopt
+import qualified System.Console.Docopt as DO
 import System.Environment ( getArgs )
-import System.Exit ( exitSuccess, exitWith )
+import System.Exit ( exitFailure, exitSuccess, exitWith )
+import System.IO ( hPutStrLn, stderr )
 import System.Process ( system )
 import Text.Printf ( printf )
 
 
-patterns :: Docopt
-patterns = [docopt|
+patterns :: DO.Docopt
+patterns = [DO.docopt|
 lambda v1.0
 
 Usage:
@@ -21,31 +22,33 @@ Options:
   -v, --verbose   Be verbose
 |]
 
-getArgOrExit = getArgOrExitWith patterns
-
 
 main :: IO ()
 main = do
-  args <- parseArgsOrExit patterns =<< getArgs
-  print args
+  args <- DO.parseArgsOrExit patterns =<< getArgs
+  handleHelp patterns args
 
-  when (isPresent args (longOption "help")) $ do
-    putStrLn $ usage patterns
-    exitSuccess
+  userCommand <- maybe (exitWithMsg "ERROR: COMMAND required") return
+    $ DO.getArg args (DO.argument "COMMAND")
 
-  --(command : args) <- getArgs
-  print $ getArg args (argument "COMMAND")
-  print $ getAllArgs args (argument "ARG")
+  let userArgs = unwords $ DO.getAllArgs args (DO.argument "ARG")
 
-  {- For debugging
-  putStr "Command: "
-  print command
-  putStr "Arguments: "
-  print . unwords $ args
-  -}
+  when (DO.isPresent args $ DO.longOption "verbose") $ do
+    putStrLn $ "COMMAND: " ++ userCommand
+    putStrLn $ "ARGS: " ++ userArgs
 
-  {-
-  let script = printf "function lambdaf() { %s; }; lambdaf %s" command (unwords args)
+  let script = printf "function lambdaf() { %s; }; lambdaf %s"
+        userCommand userArgs
   exitCode <- system script
   exitWith exitCode
-  -}
+
+
+handleHelp :: DO.Docopt -> DO.Arguments -> IO ()
+handleHelp patterns' args =
+  when (DO.isPresent args $ DO.longOption "help") $ do
+    putStrLn $ DO.usage patterns'
+    exitSuccess
+
+
+exitWithMsg :: String -> IO a
+exitWithMsg msg = hPutStrLn stderr msg >> exitFailure
