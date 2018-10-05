@@ -13,13 +13,26 @@ patterns :: DO.Docopt
 patterns = [DO.docopt|
 lambda v1.0
 
+Wrap shell commands in a lambda function
+
 Usage:
   lambda [-h]
   lambda [-v] <COMMAND> [<ARG>] [<ARG>] ...
 
 Options:
   -h, --help      This help info
-  -v, --verbose   Be verbose
+  -v, --verbose   Echo back the command and args list before executing
+
+This is useful when you need to repeatedly modify an argument buried in the
+middle of a long command. lambda lets you pull the arguments out to the end of
+the command line where it's easier to edit them. It can also be used as a
+`flip` function to reorder arguments.
+
+Example:
+
+  $ lambda 'find $2 -name "$1"' *.log /var/log
+
+The exit code will be that of COMMAND
 |]
 
 
