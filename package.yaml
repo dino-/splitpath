@@ -48,6 +48,7 @@ default-extensions:
 
 dependencies:
 - base >=4.10 && < 5
+- docopt
 
 # library:
 #   source-dirs: src/lib
