@@ -1,0 +1,75 @@
+name: fpsh
+version: '1.0'
+#synopsis:
+#description:
+license: ISC
+author: Dino Morelli
+maintainer: dino@ui3.info
+copyright: 2018 Dino Morelli
+category: Unclassified
+extra-source-files:
+- changelog.md
+- package.yaml
+- README.md
+- stack.yaml
+
+github: dino-/fpsh
+
+ghc-options:
+- -fwarn-tabs
+- -Wall
+- -Wcompat
+# - -Werror
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wredundant-constraints
+
+default-extensions:
+- BangPatterns
+- DeriveFoldable
+- DeriveFunctor
+- DeriveGeneric
+- DeriveLift
+- DeriveTraversable
+- EmptyCase
+- FlexibleContexts
+- FlexibleInstances
+- GeneralizedNewtypeDeriving
+- InstanceSigs
+- KindSignatures
+- LambdaCase
+- MultiParamTypeClasses
+- MultiWayIf
+- NamedFieldPuns
+- OverloadedStrings
+- ScopedTypeVariables
+- StandaloneDeriving
+- TupleSections
+
+dependencies:
+- base >=4.10 && < 5
+
+# library:
+#   source-dirs: src/lib
+#   dependencies: []
+
+executables:
+  lambda:
+    source-dirs: src/lambda
+    main: Main.hs
+    dependencies:
+    - process
+    # - fpsh
+
+# tests:
+#   fpsh-test-suite:
+#     source-dirs: src/test
+#     main: Main.hs
+#     dependencies:
+#     - fpsh
+#     - tasty
+#     - tasty-hspec
+#     ghc-options:
+#     - -rtsopts
+#     - -threaded
+#     - -with-rtsopts=-N
