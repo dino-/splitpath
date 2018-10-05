@@ -1,10 +1,13 @@
 {-# LANGUAGE QuasiQuotes #-}
 
 import Control.Monad ( when )
+import Data.Time ( formatTime, getCurrentTime )
+import Data.Time.Format ( defaultTimeLocale )
 import qualified System.Console.Docopt as DO
-import System.Environment ( getArgs )
+import System.Environment ( getArgs, getProgName )
 import System.Exit ( exitFailure, exitSuccess, exitWith )
 import System.IO ( hPutStrLn, stderr )
+import System.Posix.Process ( getProcessID )
 import System.Process ( system )
 import Text.Printf ( printf )
 
@@ -50,8 +53,9 @@ main = do
 
   let userArgs = unwords $ DO.getAllArgs args (DO.argument "ARG")
 
-  let script = printf "function lambdaf() { %s; }; lambdaf %s"
-        userCommand userArgs
+  tempName <- mkTempName
+  let script = printf "function %s() { %s; }; %s %s"
+        tempName userCommand tempName userArgs
 
   when (DO.isPresent args $ DO.longOption "verbose") $ do
     putStrLn $ "COMMAND: " ++ userCommand
@@ -73,3 +77,10 @@ handleHelp patterns' args =
 
 exitWithMsg :: String -> IO a
 exitWithMsg msg = hPutStrLn stderr msg >> exitFailure
+
+
+mkTempName :: IO String
+mkTempName = printf "%s_%s_%s"
+  <$> getProgName
+  <*> (show <$> getProcessID)
+  <*> (formatTime defaultTimeLocale "%s" <$> getCurrentTime)
