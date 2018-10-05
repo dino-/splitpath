@@ -6,7 +6,7 @@ license: ISC
 author: Dino Morelli
 maintainer: dino@ui3.info
 copyright: 2018 Dino Morelli
-category: Unclassified
+category: Application, Console, Scripting
 extra-source-files:
 - changelog.md
 - package.yaml
