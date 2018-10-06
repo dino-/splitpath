@@ -15,8 +15,6 @@ import System.IO ( hPutStrLn, stderr )
 
 patterns :: Docopt
 patterns = [docopt|
-splitpath v1.0
-
 Comprehensive path splitting utility
 
 Usage:
@@ -50,6 +48,9 @@ Examples:
   $ splitpath --dropextensions /foo/bar/baz.tar.gz  # /foo/bar/baz
   $ splitpath --takebasename   /foo/bar/baz.tar.gz  # baz.tar
   $ splitpath --takefilename   /foo/bar/baz.tar.gz  # baz.tar.gz
+
+
+Version 1.0  Dino Morelli <dino@ui3.info>
 |]
 
 

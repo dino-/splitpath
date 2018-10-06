@@ -14,8 +14,6 @@ import Text.Printf ( printf )
 
 patterns :: DO.Docopt
 patterns = [DO.docopt|
-lambda v1.0
-
 Wrap shell commands in a lambda function
 
 Usage:
@@ -40,6 +38,9 @@ Example:
   $ lambda 'find $2 -name $1' *.log /var/log
 
 The exit code will be that of COMMAND
+
+
+Version 1.0  Dino Morelli <dino@ui3.info>
 |]
 
 
