@@ -51,15 +51,15 @@ main = do
   userCommand <- maybe (exitWithMsg "ERROR: COMMAND required") return
     $ DO.getArg args (DO.argument "COMMAND")
 
-  let userArgs = unwords $ DO.getAllArgs args (DO.argument "ARG")
+  let userArgs = DO.getAllArgs args (DO.argument "ARG")
 
   tempName <- mkTempName
   let script = printf "function %s() { %s; }; %s %s"
-        tempName userCommand tempName userArgs
+        tempName userCommand tempName (unwords userArgs)
 
   when (DO.isPresent args $ DO.longOption "verbose") $ do
     putStrLn $ "COMMAND: " ++ userCommand
-    putStrLn $ "ARGS: " ++ userArgs
+    putStrLn $ "ARGS: " ++ (show userArgs)
     when ((DO.getArgCount args $ DO.longOption "verbose") > 1) $ do
       putStrLn $ "SCRIPT: " ++ script
     putStrLn ""
