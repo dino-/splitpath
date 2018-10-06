@@ -46,7 +46,7 @@ The exit code will be that of COMMAND
 main :: IO ()
 main = do
   args <- DO.parseArgsOrExit patterns =<< getArgs
-  handleHelp patterns args
+  handleHelp args
 
   userCommand <- maybe (exitWithMsg "ERROR: COMMAND required") return
     $ DO.getArg args (DO.argument "COMMAND")
@@ -68,10 +68,10 @@ main = do
   exitWith exitCode
 
 
-handleHelp :: DO.Docopt -> DO.Arguments -> IO ()
-handleHelp patterns' args =
+handleHelp :: DO.Arguments -> IO ()
+handleHelp args =
   when (DO.isPresent args $ DO.longOption "help") $ do
-    putStrLn $ DO.usage patterns'
+    putStrLn $ DO.usage patterns
     exitSuccess
 
 
