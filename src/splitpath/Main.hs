@@ -1,10 +1,15 @@
 {-# LANGUAGE QuasiQuotes #-}
 
 import Control.Monad ( when )
-import System.Console.Docopt ( Arguments, Docopt, argument, docopt, getArg, isPresent, longOption, parseArgsOrExit, usage )
+import System.Console.Docopt (
+  Arguments, Docopt,
+  argument, docopt, getArg, isPresent,
+  longOption, parseArgsOrExit, usage )
 import System.Environment ( getArgs )
 import System.Exit ( exitFailure, exitSuccess )
-import System.FilePath ( dropFileName, takeBaseName, takeDirectory, takeExtension, takeExtensions, takeFileName )
+import System.FilePath (
+  dropExtension, dropExtensions, dropFileName, takeBaseName,
+  takeDirectory, takeExtension, takeExtensions, takeFileName )
 import System.IO ( hPutStrLn, stderr )
 
 
@@ -12,36 +17,39 @@ patterns :: Docopt
 patterns = [docopt|
 splitpath v1.0
 
-FIXME
+Comprehensive path splitting utility
 
 Usage:
-  splitpath [-h]
-  splitpath [-d | -D | -f | -F | -e | -E] <PATH>
+  splitpath [options] <PATH>
 
 Options:
-  -d, --directory       The directory
-  -D, --dir-with-sep    The directory including a trailing separator
-  -e, --ext             The shortest extension from the end of the path
-  -E, --ext-all
-  -f, --file            The filename only, no path, no extension
-  -F, --file-with-ext   The filename with extension, no path
-  -h, --help            This help info
+  --takedirectory     Get the directory name (move up one level)
+  --dropfilename      Drop the filename, leave the trailing path separator
+  --takeextension     Get the extension
+  --dropextension     Drop the extension
+  --takeextensions    Get all extensions
+  --dropextensions    Drop all extensions
+  --takebasename      Get the base name, without an extention or path
+  --takefilename      Get the file name
+  -h, --help          This help info
 
 The standard tools for separating file paths in bash are primitive and lacking
 features. There are also problems when spaces are present in the path. On the
 other hand, many programming language standard libraries have powerful tools
 for breaking apart file paths. This utility wraps the functionality present in
-Haskell's System.Directory and System.FilePath libraries, exposing this
-behavior as a simple utility with switches.
+Haskell's System.FilePath library, exposing this behavior as a simple utility
+with switches.
 
 Examples:
 
-  $ splitpath -d /foo/bar/baz.tar.gz  # /foo/bar
-  $ splitpath -D /foo/bar/baz.tar.gz  # /foo/bar/
-  $ splitpath -f /foo/bar/baz.tar.gz  # baz.tar
-  $ splitpath -F /foo/bar/baz.tar.gz  # baz.tar.gz
-  $ splitpath -e /foo/bar/baz.tar.gz  # .gz
-  $ splitpath -E /foo/bar/baz.tar.gz  # .tar.gz
+  $ splitpath --takedirectory  /foo/bar/baz.tar.gz  # /foo/bar
+  $ splitpath --dropfilename   /foo/bar/baz.tar.gz  # /foo/bar/
+  $ splitpath --takeextension  /foo/bar/baz.tar.gz  # .gz
+  $ splitpath --dropextension  /foo/bar/baz.tar.gz  # /foo/bar/baz.tar
+  $ splitpath --takeextensions /foo/bar/baz.tar.gz  # .tar.gz
+  $ splitpath --dropextensions /foo/bar/baz.tar.gz  # /foo/bar/baz
+  $ splitpath --takebasename   /foo/bar/baz.tar.gz  # baz.tar
+  $ splitpath --takefilename   /foo/bar/baz.tar.gz  # baz.tar.gz
 |]
 
 
@@ -58,12 +66,14 @@ main = do
 
 extractPart :: Arguments -> FilePath -> Either String FilePath
 extractPart args path
-  | isPresent args $ longOption "directory" = Right . takeDirectory $ path
-  | isPresent args $ longOption "dir-with-sep" = Right . dropFileName $ path
-  | isPresent args $ longOption "file" = Right . takeBaseName $ path
-  | isPresent args $ longOption "file-with-ext" = Right . takeFileName $ path
-  | isPresent args $ longOption "ext" = Right . takeExtension $ path
-  | isPresent args $ longOption "ext-all" = Right . takeExtensions $ path
+  | isPresent args $ longOption "takedirectory" = Right . takeDirectory $ path
+  | isPresent args $ longOption "dropfilename" = Right . dropFileName $ path
+  | isPresent args $ longOption "takeextension" = Right . takeExtension $ path
+  | isPresent args $ longOption "dropextension" = Right . dropExtension $ path
+  | isPresent args $ longOption "takeextensions" = Right . takeExtensions $ path
+  | isPresent args $ longOption "dropextensions" = Right . dropExtensions $ path
+  | isPresent args $ longOption "takebasename" = Right . takeBaseName $ path
+  | isPresent args $ longOption "takefilename" = Right . takeFileName $ path
   | otherwise = Left "ERROR: An option must be specified"
 
 
