@@ -64,8 +64,7 @@ main = do
       putStrLn $ "SCRIPT: " ++ script
     putStrLn ""
 
-  exitCode <- system script
-  exitWith exitCode
+  system script >>= exitWith
 
 
 handleHelp :: DO.Arguments -> IO ()
