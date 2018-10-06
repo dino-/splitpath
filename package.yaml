@@ -24,10 +24,6 @@ ghc-options:
 - -Wincomplete-uni-patterns
 - -Wredundant-constraints
 
-# default-extensions:
-# - GeneralizedNewtypeDeriving
-# - TupleSections
-
 dependencies:
 - base >=4.10 && < 5
 - docopt
@@ -45,16 +41,3 @@ executables:
     # - fpsh
     - time
     - unix
-
-# tests:
-#   fpsh-test-suite:
-#     source-dirs: src/test
-#     main: Main.hs
-#     dependencies:
-#     - fpsh
-#     - tasty
-#     - tasty-hspec
-#     ghc-options:
-#     - -rtsopts
-#     - -threaded
-#     - -with-rtsopts=-N
