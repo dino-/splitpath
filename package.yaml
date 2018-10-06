@@ -1,4 +1,4 @@
-name: fpsh
+name: shutils
 version: '1.0'
 #synopsis:
 #description:
@@ -13,7 +13,7 @@ extra-source-files:
 - README.md
 - stack.yaml
 
-github: dino-/fpsh
+github: dino-/shutils
 
 ghc-options:
 - -fwarn-tabs
@@ -38,6 +38,6 @@ executables:
     main: Main.hs
     dependencies:
     - process
-    # - fpsh
+    # - shutils
     - time
     - unix

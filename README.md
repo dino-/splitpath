@@ -1,4 +1,4 @@
-# fpsh
+# shutils
 
 
 ## Synopsis
@@ -9,7 +9,7 @@
 
 ## Getting source
 
-Source code is available from github at the [fpsh](https://github.com/dino-/fpsh) project page.
+Source code is available from github at the [shutils](https://github.com/dino-/shutils) project page.
 
 
 ## Contact
