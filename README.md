@@ -8,7 +8,7 @@ A collection of utilities for scripting and working in a shell
 
 ## Description
 
-Utilities to assist with scripting and working in a shell. Utilities include lamda.
+Utilities to assist with scripting and working in a shell. Utilities include lambda.
 
 ### lambda
 
