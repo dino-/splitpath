@@ -9,6 +9,7 @@ copyright: 2018 Dino Morelli
 category: Application, Console, Scripting
 extra-source-files:
 - changelog.md
+- .gitignore
 - package.yaml
 - README.md
 - stack.yaml
@@ -19,7 +20,6 @@ ghc-options:
 - -fwarn-tabs
 - -Wall
 - -Wcompat
-- -Werror
 - -Wincomplete-record-updates
 - -Wincomplete-uni-patterns
 - -Wredundant-constraints
