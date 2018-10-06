@@ -1,7 +1,7 @@
 name: shutils
 version: '1.0'
-#synopsis:
-#description:
+synopsis: A collection of utilities for scripting and working in a shell
+description: Utilities to assist with scripting and working in a shell. Utilities include lamda.
 license: ISC
 author: Dino Morelli
 maintainer: dino@ui3.info
