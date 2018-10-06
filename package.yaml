@@ -41,3 +41,11 @@ executables:
     # - shutils
     - time
     - unix
+
+  splitpath:
+    source-dirs: src/splitpath
+    main: Main.hs
+    dependencies:
+    - filepath
+    - process
+    # - shutils
