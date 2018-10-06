@@ -28,9 +28,9 @@ dependencies:
 - base >=4.10 && < 5
 - docopt
 
-# library:
-#   source-dirs: src/lib
-#   dependencies: []
+library:
+  source-dirs: src/lib
+  dependencies: []
 
 executables:
   lambda:
@@ -38,7 +38,7 @@ executables:
     main: Main.hs
     dependencies:
     - process
-    # - shutils
+    - shutils
     - time
     - unix
 
@@ -47,5 +47,4 @@ executables:
     main: Main.hs
     dependencies:
     - filepath
-    - process
-    # - shutils
+    - shutils

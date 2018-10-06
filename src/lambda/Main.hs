@@ -5,11 +5,12 @@ import Data.Time ( formatTime, getCurrentTime )
 import Data.Time.Format ( defaultTimeLocale )
 import qualified System.Console.Docopt as DO
 import System.Environment ( getArgs, getProgName )
-import System.Exit ( exitFailure, exitSuccess, exitWith )
-import System.IO ( hPutStrLn, stderr )
+import System.Exit ( exitWith )
 import System.Posix.Process ( getProcessID )
 import System.Process ( system )
 import Text.Printf ( printf )
+
+import Shutils.Opts ( handleHelp, exitWithMsg )
 
 
 patterns :: DO.Docopt
@@ -47,7 +48,7 @@ Version 1.0  Dino Morelli <dino@ui3.info>
 main :: IO ()
 main = do
   args <- DO.parseArgsOrExit patterns =<< getArgs
-  handleHelp args
+  handleHelp patterns args
 
   userCommand <- maybe (exitWithMsg "ERROR: COMMAND required") return
     $ DO.getArg args (DO.argument "COMMAND")
@@ -66,17 +67,6 @@ main = do
     putStrLn ""
 
   system script >>= exitWith
-
-
-handleHelp :: DO.Arguments -> IO ()
-handleHelp args =
-  when (DO.isPresent args $ DO.longOption "help") $ do
-    putStrLn $ DO.usage patterns
-    exitSuccess
-
-
-exitWithMsg :: String -> IO a
-exitWithMsg msg = hPutStrLn stderr msg >> exitFailure
 
 
 mkTempName :: IO String
