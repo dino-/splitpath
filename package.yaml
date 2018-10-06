@@ -1,7 +1,7 @@
 name: shutils
 version: '1.0'
 synopsis: A collection of utilities for scripting and working in a shell
-description: Utilities to assist with scripting and working in a shell. Utilities include lambda.
+description: Utilities to assist with scripting and working in a shell. Utilities include lambda and splitpath.
 license: ISC
 author: Dino Morelli
 maintainer: dino@ui3.info
