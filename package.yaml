@@ -31,5 +31,7 @@ executables:
     main: Main.hs
     dependencies:
     - base >=4.10 && < 5
-    - docopt
+    - ansi-wl-pprint
     - filepath
+    - heredoc
+    - optparse-applicative
