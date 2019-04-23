@@ -1,15 +1,16 @@
 {-# LANGUAGE QuasiQuotes #-}
 
+import Control.Monad ( when )
 import System.Console.Docopt (
   Arguments, Docopt,
   argument, docopt, getArg, isPresent,
-  longOption, parseArgsOrExit )
+  longOption, parseArgsOrExit, usage )
 import System.Environment ( getArgs )
+import System.Exit ( exitFailure, exitSuccess )
 import System.FilePath (
   dropExtension, dropExtensions, dropFileName, takeBaseName,
   takeDirectory, takeExtension, takeExtensions, takeFileName )
-
-import Shutils.Opts ( handleHelp, exitWithMsg )
+import System.IO ( hPutStrLn, stderr )
 
 
 patterns :: Docopt
@@ -56,12 +57,23 @@ Version 1.0  Dino Morelli <dino@ui3.info>
 main :: IO ()
 main = do
   args <- parseArgsOrExit patterns =<< getArgs
-  handleHelp patterns args
+  handleHelp args
 
   path <- maybe (exitWithMsg "ERROR: PATH required") return
     $ getArg args (argument "PATH")
 
   either exitWithMsg putStrLn $ extractPart args path
+
+
+handleHelp :: Arguments -> IO ()
+handleHelp args =
+  when (isPresent args $ longOption "help") $ do
+    putStrLn $ usage patterns
+    exitSuccess
+
+
+exitWithMsg :: String -> IO a
+exitWithMsg msg = hPutStrLn stderr msg >> exitFailure
 
 
 extractPart :: Arguments -> FilePath -> Either String FilePath

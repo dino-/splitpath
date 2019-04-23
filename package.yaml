@@ -1,11 +1,11 @@
-name: shutils
+name: splitpath
 version: '1.0'
-synopsis: A collection of utilities for scripting and working in a shell
-description: Utilities to assist with scripting and working in a shell. Utilities include lambda and splitpath.
+synopsis: Safely split paths in many ways
+description: A tool for splitting paths that's more reliable and straightforward than the usual combination of `basename` and bash built-ins like `##*.` and `%.*`. This tool has smarter support for extensions and spaces as well.
 license: ISC
 author: Dino Morelli
 maintainer: dino@ui3.info
-copyright: 2018 Dino Morelli
+copyright: 2019 Dino Morelli
 category: Application, Console, Scripting
 extra-source-files:
 - changelog.md
@@ -13,8 +13,9 @@ extra-source-files:
 - package.yaml
 - README.md
 - stack.yaml
+- util/resources/appimage/splitpath*
 
-github: dino-/shutils
+github: dino-/splitpath
 
 ghc-options:
 - -fwarn-tabs
@@ -24,27 +25,11 @@ ghc-options:
 - -Wincomplete-uni-patterns
 - -Wredundant-constraints
 
-dependencies:
-- base >=4.10 && < 5
-- docopt
-
-library:
-  source-dirs: src/lib
-  dependencies: []
-
 executables:
-  lambda:
-    source-dirs: src/lambda
-    main: Main.hs
-    dependencies:
-    - process
-    - shutils
-    - time
-    - unix
-
   splitpath:
     source-dirs: src/splitpath
     main: Main.hs
     dependencies:
+    - base >=4.10 && < 5
+    - docopt
     - filepath
-    - shutils
