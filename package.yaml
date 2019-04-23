@@ -27,7 +27,7 @@ ghc-options:
 
 executables:
   splitpath:
-    source-dirs: src/splitpath
+    source-dirs: src/app
     main: Main.hs
     dependencies:
     - base >=4.10 && < 5
