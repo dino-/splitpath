@@ -1,5 +1,5 @@
 [Desktop Entry]
-Categories=Utility;
+Categories=Utility;FileTools;ConsoleOnly;
 Type=Application
 Icon=splitpath
 Exec=splitpath
