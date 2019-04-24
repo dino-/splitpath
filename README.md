@@ -8,9 +8,17 @@ Safely split paths in many ways (Haskell)
 
 ## Description
 
-A tool for splitting paths that's more reliable and straightforward than the
-usual combination of `basename` and bash built-ins like `##*.` and `%.*`. This
-tool has smarter support for extensions and spaces as well.
+The standard tools and techniques in bash for separating file paths into
+directories, filenames and extensions are confusing. For example, these things:
+`"${FOO##*.}"` and `"${BAR%.*}"` Also, quoting gets complicated when paths
+contain spaces.
+
+On the other hand, many programming language standard libraries have powerful
+tools for breaking apart file paths.
+
+This software wraps the functionality present in Haskell's System.FilePath and
+System.Directory libraries, exposing these functions in a simple utility with
+clearly-named switches.
 
 
 ## Getting source

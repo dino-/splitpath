@@ -104,12 +104,17 @@ parseOptions = execParser $ info (parser <**> helper)
 footer' :: InfoMod a
 footer' = footerDoc . Just . string $ printf content (showVersion version)
   where content = tail . init $ [here|
-The standard tools for separating file paths in bash are primitive and lacking
-features. There are also problems when spaces are present in the path. On the
-other hand, many programming language standard libraries have powerful tools
-for breaking apart file paths. This utility wraps the functionality present in
-Haskell's System.FilePath library, exposing this behavior as a simple utility
-with switches.
+The standard tools and techniques in bash for separating file paths into
+directories, filenames and extensions are confusing. For example, these things:
+"${FOO##*.}" and "${BAR%%.*}" Also, quoting gets complicated when paths
+contain spaces.
+
+On the other hand, many programming language standard libraries have powerful
+tools for breaking apart file paths.
+
+This software wraps the functionality present in Haskell's System.FilePath and
+System.Directory libraries, exposing these functions in a simple utility with
+clearly-named switches.
 
 Examples:
 
