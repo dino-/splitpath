@@ -25,6 +25,13 @@ data Options
   | TakeBasename FilePath
   | TakeFilename FilePath
   | Version
+  | NoArguments
+
+
+-- A helper to differentiate between --version and no arguments at all
+determineIfVersion :: Bool -> Options
+determineIfVersion True  = Version
+determineIfVersion False = NoArguments
 
 
 parser :: Parser Options
@@ -69,7 +76,7 @@ parser =
     <> metavar "PATH"
     <> help "Get the file name"
     ) <|>
-  Version <$ switch
+  determineIfVersion <$> switch
     (  long "version"
     <> help "Display version"
     )
