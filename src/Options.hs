@@ -24,6 +24,8 @@ data Options
   | DropExtensions FilePath
   | TakeBasename FilePath
   | TakeFilename FilePath
+  | MakeAbsolute FilePath
+  | MakeRelative FilePath
   | Version
   | NoArguments
 
@@ -76,6 +78,16 @@ parser =
     <> metavar "PATH"
     <> help "Get the file name"
     ) <|>
+  MakeAbsolute <$> strOption
+    (  long "makeabsolute"
+    <> metavar "PATH"
+    <> help "Convert a path into an absolute path"
+    ) <|>
+  MakeRelative <$> strOption
+    (  long "makerelative"
+    <> metavar "PATH"
+    <> help "Construct a path relative to the current directory"
+    ) <|>
   determineIfVersion <$> switch
     (  long "version"
     <> help "Display version"
@@ -101,14 +113,16 @@ with switches.
 
 Examples:
 
-  $ splitpath --takedirectory  /foo/bar/baz.tar.gz  # /foo/bar
-  $ splitpath --dropfilename   /foo/bar/baz.tar.gz  # /foo/bar/
-  $ splitpath --takeextension  /foo/bar/baz.tar.gz  # .gz
-  $ splitpath --dropextension  /foo/bar/baz.tar.gz  # /foo/bar/baz.tar
-  $ splitpath --takeextensions /foo/bar/baz.tar.gz  # .tar.gz
-  $ splitpath --dropextensions /foo/bar/baz.tar.gz  # /foo/bar/baz
-  $ splitpath --takebasename   /foo/bar/baz.tar.gz  # baz.tar
-  $ splitpath --takefilename   /foo/bar/baz.tar.gz  # baz.tar.gz
+  $ splitpath --takedirectory  /foo/bar/baz.tar.gz    # /foo/bar
+  $ splitpath --dropfilename   /foo/bar/baz.tar.gz    # /foo/bar/
+  $ splitpath --takeextension  /foo/bar/baz.tar.gz    # .gz
+  $ splitpath --dropextension  /foo/bar/baz.tar.gz    # /foo/bar/baz.tar
+  $ splitpath --takeextensions /foo/bar/baz.tar.gz    # .tar.gz
+  $ splitpath --dropextensions /foo/bar/baz.tar.gz    # /foo/bar/baz
+  $ splitpath --takebasename   /foo/bar/baz.tar.gz    # baz.tar
+  $ splitpath --takefilename   /foo/bar/baz.tar.gz    # baz.tar.gz
+  $ splitpath --makeabsolute   somefile               # /current/dir/somefile
+  $ splitpath --makerelative   /current/dir/somefile  # somefile
 
 Version %s  Dino Morelli <dino@ui3.info>
 |]
