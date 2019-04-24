@@ -20,6 +20,19 @@ This software wraps the functionality present in Haskell's System.FilePath and
 System.Directory libraries, exposing these functions in a simple utility with
 clearly-named switches.
 
+Usage examples:
+
+    $ splitpath --takedirectory  /foo/bar/baz.tar.gz    # /foo/bar
+    $ splitpath --dropfilename   /foo/bar/baz.tar.gz    # /foo/bar/
+    $ splitpath --takeextension  /foo/bar/baz.tar.gz    # .gz
+    $ splitpath --dropextension  /foo/bar/baz.tar.gz    # /foo/bar/baz.tar
+    $ splitpath --takeextensions /foo/bar/baz.tar.gz    # .tar.gz
+    $ splitpath --dropextensions /foo/bar/baz.tar.gz    # /foo/bar/baz
+    $ splitpath --takebasename   /foo/bar/baz.tar.gz    # baz.tar
+    $ splitpath --takefilename   /foo/bar/baz.tar.gz    # baz.tar.gz
+    $ splitpath --makeabsolute   somefile               # /current/dir/somefile
+    $ splitpath --makerelative   /current/dir/somefile  # somefile
+
 
 ## Getting source
 
